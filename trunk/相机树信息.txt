@@ -1,0 +1,29 @@
+{
+	"earaArray":
+	[
+		{
+			"earaName":"深圳汽车站",
+			"districArray":
+			[
+				{
+					"districtName":"一楼",
+					"cameraArray" :
+					[
+						{//单个相机信息
+							"camName":"IPC001",
+							"camID":"001",
+							"MediaUserName":"admin",
+							"MediaPassWord":"admin",
+							"camIP":"192.168.1.66",
+							"camPort":"8000",
+							"camMapX":"100",
+							"camMapY":"100",
+							"camState": CAM_OPEN,
+							"streamType":"H264"
+						}
+					]
+				}
+			]
+		}		
+	]
+}

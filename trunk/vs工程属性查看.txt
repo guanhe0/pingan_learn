@@ -1,0 +1,1 @@
+在工程属性中，可以看到/SUBSYSTEM:WINDOWS  或 /SUBSYSTEM:CONSOLE 或/SUBSYSTEM:WINDOWS  /DLL 的字样，分别代表win32 ，console,或者dll工程

@@ -1,0 +1,27 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: test - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE73C.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/test.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\Administrator\Desktop\desk_top\trunk\PlayCtrl_V7.3.3.60_win64_Build20170424\test.c"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE73C.tmp" 
+<h3>Output Window</h3>
+Compiling...
+test.c
+e:\迅雷下载\vc6.0\vc98\include\eh.h(32) : fatal error C1189: #error :  "eh.h is only for C++!"
+执行 cl.exe 时出错.
+
+
+
+<h3>Results</h3>
+test.obj - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

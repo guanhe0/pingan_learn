@@ -1,0 +1,38 @@
+#include <iostream> 
+#include <fstream>
+
+{
+	"msgHead" :
+	{
+        "serverIP" : "192.168.1.101",
+        "clientIP" : "192.168.1.100",
+        "msgCode" : 0,
+        "msgType" : 0,
+        "timestamp" : 1512973817,
+        "requestID": 0,
+        "boundID": 0,
+        "authorization":0
+	},
+	"msgBody" :
+	{
+		"dataRequest" :
+		{
+		
+		},
+		"dataPush" :
+		{
+			"alarmMsg":"send a alarm msg"
+		}
+	}
+}
+
+Json::Value value;
+Json::Reader reader;
+std::ifstream in;
+in.open("alarm_data.json", std::ios::binary);
+if (!in.is_open())
+	return -1;
+if (reader.parse(in, value))
+{
+	printf("serip ==== %s \n", value["msgHead"]["serverIP"].toStyledString().data());
+}

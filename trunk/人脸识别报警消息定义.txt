@@ -1,0 +1,36 @@
+//服务器推送报警相机信息
+{
+    "msgHead":
+    {
+        "serverIP" : "192.168.1.101",   										//非必填    
+        "msgCode" : JSONMSGCODE_CLIENT_SEND_WARNINFO,						//必填
+        "msgType" : JSONMSGTYPE_NOTIFY,											//必填
+        "versionNo": "v1.0.0",          										//必填
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填
+    },
+	"msgBody":
+	{
+		"dataPush":
+		{                              									
+			"msgID":,                 											//必填，消息ID
+		 	"personID":,                										//必填，报警人物ID
+			"personName":,                										//必填，报警人物姓名
+			"camID":,					 										//必填，相机ID
+			"firstWarnTime":,              										//必填，报警时间
+			"warnDegree":,              										//必填，报警等级
+			"similarity":,      												//必填，相似度
+			"optState":,														//必填，处理状态，宏
+			"optStaff":,														//必填，处理人员
+			"belief":,															//必填，置信度
+			"libPhotoUrl":"ftp://192.168.1.101/shared/xxxxxxx.jpg",				//必填, 底图
+			"libPhotoUrl":"ftp://192.168.1.110/shared/yyyyyyy.jpg"				//必填, 抓拍图
+		},
+		"dataRequest":
+		{
+			"code" :JSONMSGCODE_CLIENT_SEND_WARNINFO
+		}
+	}
+}

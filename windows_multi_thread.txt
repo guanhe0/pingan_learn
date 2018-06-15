@@ -1,0 +1,12 @@
+TrySubmitThreadpoolCallback(WorkThread,NULL,NULL)
+WorkThread(PTP_CALLBACK_INSTANCE Instance,PVOID Context)
+
+PTP_WORK pw = CreateThreadpoolWork(WorkThread1,NULL,NULL);//创建工作项对象，带有WorkThread1出来函数
+SubmitThreadpoolWork(pw);//提交工作项对象
+VOID CALLBACK WorkThread1(PTP_CALLBACK_INSTANCE Instance,PVOID Context,PTP_WORK Work)
+Sleep(2000);
+WaitForThreadpoolWorkCallbacks(pw,TRUE);
+CloseThreadpoolWork(pw);
+
+ 
+ 

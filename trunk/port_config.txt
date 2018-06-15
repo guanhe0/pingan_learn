@@ -1,0 +1,5 @@
+6000 java
+6001 client
+int nFaceDetectPort = 5556;
+int nClientPort = 5555;
+FaceDetectBroadCast = 5557;

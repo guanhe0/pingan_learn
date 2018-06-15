@@ -1,0 +1,437 @@
+﻿人脸识别考勤值班，海康预览sdk二次开发画矩阵功能添加
+海康摄像机实时流获取sdk功能测试，opencv代码调试
+
+opencv example_main 编译运行异常原因查找，
+
+[10.20]海康摄像实时流获取与解码播放
+[10.23]海康摄像机实时流获取接口封装
+[10.25]opencv + 海康sdk 连接 海康摄像机
+[10.26]opencv 连接海康摄像头 需要vs2017 支持mfc，vs2017默认没有安装，尝试新方法
+[10.27]服务器端实现时间计划制定
+[10.30]opencv 环境搭建和测试用例
+[10.31]opencv 连接海康摄像头获取视频，视频解码类的封装
+[11.1]opencv 通过海康sdk 连接海康摄像头代码编写调试
+[11.2]opencv + 海康sdk 连接摄像头调试ok 封装成类
+[11.3]多路摄像头连接方法查找
+[11.6]2路摄像头视频流获取ok
+[11.7]ffmpeg 源码编译实验
+[11.8]ffmpeg 编译初步成功并新建测试项目进行测试
+[11.9]ffmpeg 新建项目测试ffmpeg编译错误修改
+[11.10]ffmpeg 获取摄像机视频代码编译错误修改
+[11.13]ffmpeg 从南京方面获取海康解码相关思路
+[11.14]ffmpeg 开始编码调试
+[11.15]ffmpeg 海康h264流数据提取编码调试
+[11.17]ffmpeg 咨询南京关于海康h264流数据提取和验证，
+[11.16]基于海康sdk，提取ps流中的h264数据
+[11.20]海康ps pps 提取错误，寻找南京方面帮助
+[11.21]海康ps流提取h264数据ok
+[11.22]海康ps流h264提取方法封装成类，寻找ffmpeg转换h264数据为yuv方法
+[11.23]ffmpeg 转h264为yuv编码调试
+[11.24]ffmpeg 转h264为yuv编码调试
+[11.27]ffmpeg 转h264为yuv420 ok，方法封装成类
+[11.28]opencv 转yuv420为mat 调试通过，优化速度
+[11.29]ffmpeg 编码rgb为h264，编码调试
+[12.4]ffmpeg 编码rgb为h264，编码调试。
+[12.5]ffmpeg 编码rgb为h264，编码验证ok
+[12.6]熟悉服务端架构细图和客户端需求，提出流媒体服务器与客户端联通的尝试，服务端做登录验证设计
+[12.7]客户端与服务端通过zmq通信调试ok，编译json测试程序暂时遇到问题。
+[12.8]json数据序列化与反序列化和传输ok
+[12.9]服务端与客户端登录模块联调，
+[12.12]相机树编码ok
+[12.13]zmq 发布订阅模式程序测试，多子进程并发效果测试，与java端通信
+[12.14]配合client多线程调试，定义java端数据传输格式，测试 zmq_poll模式，为多路请求准备，测试ACE reactor模式，为并发准备
+[12.15]zmq POLLOUT模式调试与测试
+[12.18]jsoncpp 文件读取测试
+[12.19]zmq 服务框架模型测试
+[12.20]zmq 服务器框架第一版模型测试
+[12.21]客户端与服务端，连接测试，登录测试
+[12.22]编码将java端数据转化为客户端需求数据格式
+[12.25]相机树编码调试ok，需要与java联调
+[12.26]发送消息改成统一接口，jsoncpp中文传输
+[12.27]报警消息流程商讨编码
+[12.28]报警编码完成，准备联调，日志类的调试
+[12.29]
+[1.2]java ip和端口Json数据格式定义、客户端版本json格式、用户名密码Json数据格式定义、redis数据库预研
+[1.3]服务器启动初始化java ip信息获取、客户端版本信息改从java获取、用户名密码信息改从java获取
+[1.4]跟java通信调试前一天的数据接口
+[1.5]人脸检测业务逻辑编码调试
+[1.8]尝试服务器简单请求应答模式改异步通信
+[1.9]客户端服务器异步模式测试ok，跟java端联调报警广播消息
+[1.10]改服务器架构同步为异步模式。
+[1.11]人脸识别业务逻辑编码完成
+[1.12]人脸识别调试
+[1.15]服务器框架负载平衡模式改为单业务单线程模式
+[1.16]新服务器与客户端接口调试完成
+[1.17]新服务器框架与人脸检测人脸识别调试
+[1.18]新服务器框架与人脸检测人脸识别调试
+[1.19]新服务器框架客户端与java端联调
+[1.22]登录，相机信息通信调试
+[1.23]客户端，java联调、人脸检测、人脸识别内部联调
+[1.24]人脸检测，人脸识别内部调试ok，联调ok，人脸识别结果数据重新定义
+[1.27]线程通信栈空间改为堆空间，rtsp通信ok
+[1.29]第一次全线联调
+[2.1]联调bug解决
+[2.2]联调bug解决，形体分析接口定义
+[2.6]人脸入库，人脸检测初始化，人脸识别初始化接口协议定义，java部分编码
+[2.7]图片入库编码完成，跟踪与形体分析协议确定，跟踪与java协议确定
+[2.8]图片入库补充代码，等待联调
+[2.9] 图片入库联调，人形联调
+[2.12] 人脸识别bug查找
+[2.13] zmq负载均衡使用熟悉
+[2.23] [从redis读取人脸识别注册信息，人脸识别，人脸检测，形体的通讯bug]阅读redis读取数据例子，编译黄仕君的testredis工程，解决编译错误，提取redis数据读取步骤
+[2.24] redis 数据库的使用
+[2.26] 图片入库，rtsp联调
+[3.2] 人形跟踪联调
+[3.1] 跟踪代码合并编译，人形联调
+[3.5] 工程异地编译优化
+[3.6] 人形，跟踪联调
+[3.7] 广播线程心跳检测，跟踪线程函数启动，进程id错误检测，相似度设默认值
+[3.8] 人脸识别状态互斥设置,抓拍查询代码添加，跟踪重识别消息添加
+[3.9] 监控线程定时器添加
+[3.10] 抓拍查询，日志查询等4种查询
+[3.11] 客户端抓拍确认，java数据报表推送
+[3.12] 跟踪联调
+[3.13] monitor_strategy 协议编码
+[3.14] add face_number check/add network data count/
+[3.15] add for get strategy/free lparam
+[3.16] 人脸跟踪联调
+[3.18] 人脸跟踪联调
+[3.19] 跟java端联调相机状态推送，服务器状态查询
+[3.20] 合并分支branches001到主干，相机状态，服务器状态
+[3.21] 添加分支，branches002,获取cpu温度
+[3.22] cpu占有率计算，人脸分析仪策略编码
+[3.23] face dt msg trans to rtsp 
+[3.24] 跟踪联调，人脸入库联调
+[3.26] 跟踪和人脸入库代码合并
+[3.27] 合并跟踪和人脸的新代码到主干
+[3.28] 
+提交昨天修改的代码 ok 
+100部署
+facechange test code updae
+跟踪初始化 code ok 
+[3.29]
+SHAPE_MSG2_TRACK unkown msg type 
+zmq 422 build failed
+daily report ok 
+[3.30] 
+人脸注册
+web服务开启 move to tommorrow
+相机树配置 
+			初始化  client rtsp ok 
+			动态添加 move to tommorrow
+[3.31] commit code 
+相机树配置
+	   动态添加 ok 
+web开启服务	  
+[4.2] 
+人脸识别参数修改
+相机参数修改
+分析仪ip地址配置
+初始化和增删改(相机、分析仪布控策略、人脸库)
+人脸入库功能添加定时器
+
+人脸检测服务端改变相机请求接口 ok
+Java请求开启业务服务请求接口变更20180330 涉及框架更改
+JAVA请求修改识别的人脸库	ok 	
+Java添加一个相机的推送接口	ok 
+流媒体服务请求改变相机接口	和已实现的区别不大
+人脸检测服务端改变相机请求接口	和已实现的区别不大
+日报，上月
+[4.3] 
+告警消息没有被客户端接收到 	
+集群初始化回复消息
+测试脚本编写
+消息重新表述
+香机树初始化
+[4.4] 
+告警消息没有被客户端接收到 人脸阈值设置问题
+集群初始化回复消息，暂不回复
+测试脚本编写 
+连续消息请求问题	ok
+打印升级
+JAVA请求修改识别的人脸库.docx ing
+流媒体服务请求改变相机接口.docx
+branches code commit	ok 
+切换流相机id不一致	
+422 zmq库 调用
+相机相似度，传输
+
+[4.5]qingm
+[4.6]qingm
+[4.7]qingm
+[4.8]
+"cameraID":3,==》 	"FaceLibId":1,"minAlarmThreshold":0.64,"facceOutNumber":5 ，facedtmsg result [code ok]
+code commit ok 
+JSONMSGCODE_JAVA_CHANGE_CAMERA waiting for finish
+pre_request_finish_status
+JSONMSGCODE_JAVA_CHANGE_STRATEGY 有待确认
+[4.9]
+"FaceLibId":1,"minAlarmThreshold":0.64,"facceOutNumber":5 ，facedtmsg result [code ok]
+JSONMSGCODE_JAVA_CHANGE_CAMERA waiting for finish//wait to link debug
+pre_request_finish_status
+JSONMSGCODE_JAVA_CHANGE_STRATEGY 有待确认
+开发群信息搜集	
+mtserver 内存泄漏 0
+日志按时或者按大小生成 1
+相机变更，更新JSONMSGCODE_CLIENT_GET_TREEINFO (pc_client.cpp)
+[4.10]
+[4.11]
+客户端消息与identity对应
+[4.12]
+JSONMSGCODE_JAVA_CHANGE_CAMERA waiting for finish//link debug 1th
+[4.13]
+pre_request_finish_status ok 
+[4.16]
+code commit [ok]
+rtsp camera list check [ok] 
+delete unnecessary print [ok]
+1 vs 1 debug 
+[4.17]
+search_pic [code 80%]
+utf-8 [undoe]
+[4.18]
+code commit [ok]
+search_pic	[ok]
+server status [ok]
+camera status no
+
+timestamp	[no]
+[4.19]
+change camera 完整联调
+JSONMSGCODE_JAVA_CHANGE_STATEG 联调 
+[add fflush to neccessary ] [ok]
+timestamp	[ok]
+[4.20]
+code commit
+搜图联调
+utf-8 编码 
+识别参数增加，调试
+[4.21]
+识别报警表添加历史相机列表
+[4.23]
+识别报警表添加历史相机列表 
+client_worker 非正常退出 
+服务算法心跳检测
+are you ok print remove [ok]
+alarmList_send [ok]
+[4.24]
+client_worker 非正常退出 
+服务算法心跳检测
+识别报警表添加历史相机列表
+服务器的ip配置 GET_IP_FROM_JAVA [ok]
+动态添加相机，在后台体现 
+zma send msg failed [版本回退，暂不查找]
+{
+mediaPort
+mediaUserName
+}
+代码合并
+10017 java重新组数据
+0424代码合并
+[0425]
+facedt connect req add cameralist
+g_camera_list add modify delete
+facedt send cameralist init msg
+[0426]
+code commit
+parse pInfo debug
+内存泄漏问题
+搭建共享文件的网站
+
+{
+又是月底啦，温馨提醒：1. 本月日报需要在28日下班前完成录入（4.1－4.30），另外请注意日报架构更新，本月起全部在项目处产品发展管理项目进行填写（4月需全部填写此任务），2. 如有5.1加班需求的请在26日今天下班前按要求回复邮件给沈玉慧，涉及福利，请各位重视，3. 请确认好本月考勤无误
+}
+fprint 统一	
+[0427]
+服务器负载数据MB
+客户端，消息code更正
+多客户端登录
+[0427]
+版本发布bug修改
+[0428]
+月末会议
+下午请假东莞
+[0502]
+早中晚greeting
+请假邮件处理 [50%]
+mtserver 内存释放问题
+账号问题
+3人天：客户端支持多用户登录。
+[5.3]
+[5.5]
+[1 vs n] 敲代码
+v1.0.0 code commit
+
+[5.8]
+连接要正常关闭
+账号延迟处理 [ok]
+optmize{
+10004 
+10017
+10018
+}
+程序员客栈注册 [fail]
+5507多连接问题
+[5.9]
+10004 联调 
+[5.10]
+java change camera 
+ex-guanhe001
+self introduce pdf out
+[5.11]
+1 vs n 确认 [ok]
+多客户端登录 
+简历pdf发送至邮箱 
+代码合并 [ok ]
+多次点击问题
+[5.14]
+多客户端登录 
+[5.15]
+代码合并
+崩溃问题
+多客户端登录
+[5.16]
+//代码合并
+崩溃问题 [暂时ok]
+多客户端登录 
+跟踪代码添加 
+中文乱码问题 
+4,5代码合并  [ok] 
+请求添加时间控制
+滴滴注册
+[5.17]
+track
+代码提交
+程序员客栈注册
+[5.21]
+跟踪完善 [ok]
+多客户端登录 [小程序测试ok]
+[5.22]
+多客户端登录 [实测]
+1 vs N
+跟踪开多线程
+中文乱码
+150:administrator admin@123
+[5.23]
+30601 [ok]
+中文其他地方显示 
+1 vs n facetell 
+[5.24]
+单相机多人脸库 [code ok]
+1 vs n 人脸库，客户端人脸库请求 [ok]
+多客户端登录验证 [ok]
+跨相机告警 [ok]
+分支合并 
+报警策略重审 [ok]
+多人脸库 [ok]
+[5.28]
+跟踪部分 代码合并 [ok]
+跟踪相机id
+打印时间 
+ip_config.json 提示 [ok]
+109:administrator Admin123
+1 vs n 消息 人脸检测部分 [ok]
+打印关闭 
+中文合并 [1:1 ok]
+1 vs n 中文 [merge ok]
+告警时间
+[5.29]
+告警时间戳 [ok]
+考勤日报 [ok]
+1 vs n 选库 
+一个相机对应多个facelibids [ok]
+报警底图 [ok]
+facetell 人脸库传递 
+搜图中文code [ok]
+[5.30]
+打车发票 [no]
+code commit [ok]
+日报填写
+源码提交 [ok]
+可执行文件提交 [ok]
+折叠翼无人机项目 
+打印时间修改
+[5.31]
+楼梯运输项目 [no]
+日志填写 [ok]
+boss直聘 [no]
+时间接口，打印同一函数，逻辑判断 [no]
+[6.1]
+楼梯运输项目 
+boss直聘 [50%]
+时间接口，打印同一函数，逻辑判断 *
+PIC_WITH_PIC_PRINT [ok]
+FACE_SEARCH_PRINT [ok]
+CLIENT_ONE_VS_ONE [ok]
+PERSON_TRACK_PRINT [ok]
+配置文档说明 [ok]
+网络连接自动测试脚本 [ok]
+[6.4]
+boss直聘 
+配合跟踪联调 
+配合web端
+配合移动端
+mtserver 优化,并发服务器开发
+
+code commit [ok]
+中软邮箱
+ZMQ_IMMEDIATE 使用示例 zmq 连接活性检测 [ok]
+
+mtserver taocode [ok]
+[6.5]
+boss
+配合跟踪联调 
+配合web端
+配合移动端
+mtserver 优化,并发服务器开发 
+wiress listening
+length jack
+momo发布顺风车
+工作环境同步
+[6.6]
+boss [ok]
+配合跟踪联调
+配合web端
+配合移动端
+mtserver 优化,并发服务器开发 
+wiress listening
+length jack
+momo发布顺风车 
+工作环境同步
+{1,0.5,0.1}
+[6.7]
+高考日，有所表
+整理文档
+程序客栈
+JSONMSGCODE_CLIENT_TRACE_PERSON_CHANGE 
+[6.8]
+程序客栈 
+{个人介绍，社区技能}
+JSONMSGCODE_CLIENT_TRACE_PERSON_CHANGE 
+湖南车管所
+{先去处理违章，在报科目一}
+{保险公司拍照需要，先搞现场照片，后处理违章}
+协助志珍整理
+[6.11]
+zmq 连接活性检测 //https://192.168.1.200/svn/%CF%80_Smart_IOT_Platform/tool/zmq_monitor/monitor_client/monitor_client/monitor_client.cpp
+程序员客栈签约
+6.21 离开
+[6.12]
+程序员客栈签约
+多服务器，连接
+拿回二照
+电脑硬盘,cpu温度高 [ok]
+[6.14]
+zmq monitor publish
+c++线程池框架
+c++uml图[
+1 ,显示类
+]
+[6.15]
+发布程序到开发测试环境 [ok]
+boss 
+c++线程池框架运行{测试linux fork}
+淘宝快递
+
+
+

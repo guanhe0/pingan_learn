@@ -1,0 +1,554 @@
+#include "stdafx.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "videodecoding.h"
+#include <windows.h>
+#include <cstdio>
+#include <process.h>
+#include <string>
+
+//#include <libavcodec/avcodec.h>
+static AVPacket avpkt;
+#define INBUF_SIZE 4096
+#define PIC_NUM 100
+#if 0
+int main(int argc, char **argv)
+{
+
+	FILE * ff = NULL;
+
+	BITMAPFILEHEADER *test = NULL;
+	FILE* file[PIC_NUM];
+	BYTE *szTxt[PIC_NUM];
+	BYTE *szTxt_bk[PIC_NUM];
+
+	int nWidth = 0;
+	int nHeight = 0;
+
+	int nDataLen[PIC_NUM];
+	memset(nDataLen, 0, sizeof(nDataLen));
+	int nLen;
+
+	char csFileName[200];
+	ff = fopen("D:\\test\\encode.txt", "wb");
+	if (!ff)
+	{
+		fprintf(ff, "hello world\n");
+	}
+
+	for (int fileI = 1; fileI <= PIC_NUM; fileI++)
+	{
+
+		//	csFileName.Format("e:\\pics\\%d.bmp", fileI);
+		sprintf(csFileName, "D:\\test\\bmp\\%d.bmp", fileI);
+		//		file[fileI - 1].Open(csFileName, CFile::modeRead | CFile::typeBinary);
+		file[fileI - 1] = fopen(csFileName, "rb");//[2
+		if (file[fileI - 1] == NULL)
+		{
+			fprintf(ff, "open file i == %d fail \n", fileI);
+			break;
+		}
+		if (fseek(file[fileI - 1], 0, SEEK_END) == -1)//[3
+		{
+			continue;
+		}
+		nLen = ftell(file[fileI - 1]);//[4
+		szTxt[fileI - 1] = (BYTE *)malloc(nLen);//[6
+		szTxt_bk[fileI - 1] = szTxt[fileI - 1];
+		if (szTxt[fileI - 1] == NULL)
+		{
+			fprintf(ff, "malloc szTxt is  NULL\n");
+			exit(1);
+		}
+		fseek(file[fileI - 1], 0, SEEK_SET);
+		int read_ret = fread(szTxt[fileI - 1], 1, nLen, file[fileI - 1]);//[7
+		if (read_ret == 0)
+		{
+			fprintf(ff, "read file lenght ============ %d\n", read_ret);
+			continue;
+		}
+		for (int i = 0; i < sizeof(BITMAPFILEHEADER); i++)
+		{
+			//	fprintf(ff, "%02x ", szTxt[fileI - 1][i]);
+		}
+		fclose(file[fileI - 1]);
+
+		BITMAPFILEHEADER bmpFHeader = { 0 };
+		BITMAPINFOHEADER bmpIHeader = { 0 };
+		test = &bmpFHeader;
+
+		memcpy(&bmpFHeader, szTxt[fileI - 1], sizeof(BITMAPFILEHEADER));//map
+		int nHeadLen = bmpFHeader.bfOffBits - sizeof(BITMAPFILEHEADER);
+
+		fprintf(ff, "bfType ============= %04x \n", bmpFHeader.bfType);
+		fprintf(ff, "bfSize ============= %08x \n", bmpFHeader.bfSize);
+		fprintf(ff, "bfReserved1 ============= %04x \n", bmpFHeader.bfReserved1);
+		fprintf(ff, "bfReserved2 ============= %04x \n", bmpFHeader.bfReserved2);
+		printf("BITMAPINFOHEADER ============= %d \n", sizeof(BITMAPINFOHEADER));
+
+#if 1
+		memcpy(&bmpIHeader, szTxt[fileI - 1] + sizeof(BITMAPFILEHEADER), sizeof(BITMAPINFOHEADER));  //nHeadLen  
+
+		nWidth = bmpIHeader.biWidth;
+		nHeight = bmpIHeader.biHeight;
+		szTxt[fileI - 1] += bmpFHeader.bfOffBits;
+		nDataLen[fileI - 1] = nLen - bmpFHeader.bfOffBits;
+		//	printf("fileI == %d nDataLen ==== %d\n", fileI, nDataLen[fileI - 1]);
+		////////////////////////////////////
+#endif
+	}
+
+
+	avcodec_register_all();//[1]
+
+	AVFrame *m_pRGBFrame = av_frame_alloc();// new AVFrame[1];  //RGB帧数据      
+	AVFrame *m_pYUVFrame = av_frame_alloc();// new AVFrame[1];;  //YUV帧数据    
+	AVCodecContext *c = NULL;
+	AVCodecContext *in_c = NULL;
+	AVCodec *pCodecH264; //编码器    
+	uint8_t * yuv_buff;// 
+					   //查找h264编码器    
+	pCodecH264 = avcodec_find_encoder(AV_CODEC_ID_H264);
+	if (!pCodecH264)
+	{
+		fprintf(stderr, "h264 codec not found\n");
+		exit(1);
+	}
+	c = avcodec_alloc_context3(pCodecH264);//[2]
+	c->bit_rate = 400000;// put sample parameters     
+	c->width = nWidth;//     
+	c->height = nHeight;// 
+						// frames per second     
+	AVRational rate;
+	rate.num = 1;
+	rate.den = 25;
+	c->time_base = rate;//(AVRational){1,25};    
+	c->gop_size = 10; // emit one intra frame every ten frames     
+	c->max_b_frames = 1;
+	c->thread_count = 1;
+	c->pix_fmt = AV_PIX_FMT_YUV420P;//PIX_FMT_RGB24; 
+	c->framerate = AVRational{ 25, 1 };
+
+	if (pCodecH264->id == AV_CODEC_ID_H264)
+		av_opt_set(c->priv_data, "preset", "slow", 0);
+
+	if (avcodec_open2(c, pCodecH264, NULL)<0)
+		printf("不能打开编码库");
+
+	m_pYUVFrame->format = c->pix_fmt;
+	m_pYUVFrame->width = c->width;
+	m_pYUVFrame->height = c->height;
+
+	int ret = av_frame_get_buffer(m_pYUVFrame, 32);
+	if (ret < 0) {
+		fprintf(stderr, "Could not allocate the video frame data\n");
+		exit(1);
+	}
+
+	int size = c->width * c->height;
+
+	yuv_buff = (uint8_t *)malloc((size * 3) / 2); // size for YUV 420     
+
+
+												  //图象编码    
+	int outbuf_size = 100000;
+	uint8_t * outbuf = (uint8_t*)malloc(outbuf_size);
+	avpkt.data = outbuf;
+	int u_size = 0;
+	FILE *f = NULL;
+	const char * filename = "D:\\test\\myData.h264";
+	f = fopen(filename, "wb");
+	if (!f)
+	{
+		printf("could not open %s\n", filename);
+		exit(1);
+	}
+
+	//初始化SwsContext    
+	SwsContext * scxt = sws_getContext(c->width, c->height, AV_PIX_FMT_BGR24, c->width, c->height, AV_PIX_FMT_YUV420P, SWS_POINT, NULL, NULL, NULL);
+	if (scxt == NULL)
+	{
+		printf("getcontext failed \n");
+		exit(-1);
+	}
+
+	//	printf("nWidth == %d nHeight == %d \n", nWidth, nHeight);
+	//AVFrame *pTFrame=new AVFrame    
+#if 1
+	for (int i = 0; i<250; ++i)
+	{
+
+		//AVFrame *m_pYUVFrame = new AVFrame[1];    
+
+		int index = (i / 25) % PIC_NUM;
+
+		//uint8_t * rgb_buff = new uint8_t[nDataLen[index]];
+		uint8_t * rgb_buff = new uint8_t[size * 3];
+		if (rgb_buff == NULL)
+		{
+			printf("alloc rgb_buff failed \n");
+			break;
+		}
+		printf("index ==== %d nDataLen[index] ===== %d\n", index, nDataLen[index]);
+
+		//memcpy(rgb_buff, szTxt[index], nDataLen[index]);
+		memcpy(rgb_buff, szTxt[index], size * 3);
+		cv::Mat matRGB(nWidth, nHeight, CV_8UC3, rgb_buff);
+		cv::imshow("test1", matRGB);
+		cv::waitKey();
+		cv::Mat matYUV(nWidth * 3 / 2, nHeight, CV_8UC1);
+		cv::cvtColor(matRGB, matYUV, CV_BGR2YUV_I420);
+		memcpy(yuv_buff, matYUV.data, (size * 3) / 2);
+
+		av_image_fill_arrays(m_pRGBFrame->data, m_pRGBFrame->linesize, rgb_buff, AV_PIX_FMT_RGB24, nWidth, nHeight, 1);
+		printf("m_pRGBFrame->linesize ==== %d\n", m_pRGBFrame->linesize[0]);
+		//将YUV buffer 填充YUV Frame    
+		//		avpicture_fill((AVPicture*)m_pYUVFrame, (uint8_t*)yuv_buff, AV_PIX_FMT_YUV420P, nWidth, nHeight);
+		av_image_fill_arrays(m_pYUVFrame->data, m_pYUVFrame->linesize, yuv_buff, AV_PIX_FMT_YUV420P, nWidth, nHeight, 1);
+		//		printf("m_pYUVFrame->linesize ========= %d \n", m_pYUVFrame->linesize[0]);
+		// 翻转RGB图像    
+#if 0
+		m_pRGBFrame->data[0] += m_pRGBFrame->linesize[0] * (nHeight - 1);
+		m_pRGBFrame->linesize[0] *= -1;
+		m_pRGBFrame->data[1] += m_pRGBFrame->linesize[1] * (nHeight / 2 - 1);
+		m_pRGBFrame->linesize[1] *= -1;
+		m_pRGBFrame->data[2] += m_pRGBFrame->linesize[2] * (nHeight / 2 - 1);
+		m_pRGBFrame->linesize[2] *= -1;
+#endif
+
+		//将RGB转化为YUV    
+		//sws_scale(scxt, m_pRGBFrame->data, m_pRGBFrame->linesize, 0, c->height, m_pYUVFrame->data, m_pYUVFrame->linesize);
+		//		sws_scale(scxt, m_pRGBFrame->data, m_pRGBFrame->linesize, 0, c->height, m_pYUVFrame->data, m_pYUVFrame->linesize);
+#if 1
+		int got_packet_ptr = 0;
+		av_init_packet(&avpkt);
+		avpkt.data = outbuf;
+		avpkt.size = outbuf_size;
+		//		u_size = avcodec_encode_video2(c, &avpkt, m_pYUVFrame, &got_packet_ptr);
+		int send_ret = avcodec_send_frame(c, m_pYUVFrame);
+		if (send_ret == 0)
+		{
+			int en_ret = avcodec_receive_packet(c, &avpkt);
+			if (en_ret == 0)
+			{
+				fwrite(avpkt.data, 1, avpkt.size, f);
+			}
+		}
+		if (u_size == 0)
+		{
+			fwrite(avpkt.data, 1, avpkt.size, f);
+		}
+
+		delete[]rgb_buff;
+#endif
+	}//end of for
+
+	fclose(f);
+	av_frame_free(&m_pRGBFrame);
+	av_frame_free(&m_pYUVFrame);
+
+
+	//  
+	free(outbuf);
+
+	avcodec_close(c);
+
+	av_free(c);
+#endif
+	for (int i = 0; i < PIC_NUM; i++)
+	{
+		free(szTxt_bk[i]);
+	}
+
+	fclose(ff);
+	getchar();
+}
+
+#endif
+
+using namespace cv;
+using namespace std;
+int main(int argc, char **argv)
+{
+
+	FILE * ff = NULL;
+
+	BITMAPFILEHEADER *test = NULL;
+	FILE* file[PIC_NUM];
+	unsigned char  *szTxt[PIC_NUM];
+	BYTE *szTxt_bk[PIC_NUM];
+
+	int nWidth = 0;
+	int nHeight = 0;
+
+	int nDataLen[PIC_NUM];
+	memset(nDataLen, 0, sizeof(nDataLen));
+	int nLen;
+
+	char csFileName[200];
+	ff = fopen("D:\\test\\encode.txt", "wb");
+	if (!ff)
+	{
+		fprintf(ff, "hello world\n");
+	}
+	long t1 = GetTickCount();
+	for (int fileI = 1; fileI <= PIC_NUM; fileI++)
+	{		
+		sprintf(csFileName, "D:\\test\\bmp\\img\\%d.jpg", fileI+ 10382);	
+		cv::Mat matImgIn = imread(csFileName,1);
+		cv::Mat matImgIn2;
+		//cvtColor(matImgIn1, matImgIn2, CV_BGR2RGB);
+		//cv::Mat matImgIn;
+		cv::resize(matImgIn, matImgIn, Size(464, 362));
+		//cv::Mat matImgIn = imread("D:\\test\\bmp\\1.bmp",1);
+		//namedWindow("imgread");
+		//imshow("imgread", matImgIn);
+		//waitKey(1);
+		nWidth = matImgIn.cols;
+		nHeight = matImgIn.rows;
+		unsigned char *buff = new unsigned char[nWidth*nHeight * 3];
+		memcpy(buff, matImgIn.data, nWidth*nHeight * 3);
+		szTxt[fileI - 1] = buff;
+		nDataLen[fileI - 1] = nWidth*nHeight * 3;
+/*****************************************c++读取bmp**************************************/
+	/*	file[fileI - 1] = fopen(csFileName, "rb");//[2
+		if (file[fileI - 1] == NULL)
+		{
+			fprintf(ff, "open file i == %d fail \n", fileI);
+			break;
+		}
+		if (fseek(file[fileI - 1], 0, SEEK_END) == -1)//[3
+		{
+			continue;
+		}
+		nLen = ftell(file[fileI - 1]);//[4
+		szTxt[fileI - 1] = (BYTE *)malloc(nLen);//[6
+		szTxt_bk[fileI - 1] = szTxt[fileI - 1];
+		if (szTxt[fileI - 1] == NULL)
+		{
+			fprintf(ff, "malloc szTxt is  NULL\n");
+			exit(1);
+		}
+		fseek(file[fileI - 1], 0, SEEK_SET);
+		int read_ret = fread(szTxt[fileI - 1], 1, nLen, file[fileI - 1]);//[7
+		if (read_ret == 0)
+		{
+			fprintf(ff, "read file lenght ============ %d\n", read_ret);
+			continue;
+		}
+		for (int i = 0; i < sizeof(BITMAPFILEHEADER); i++)
+		{
+			//	fprintf(ff, "%02x ", szTxt[fileI - 1][i]);
+		}
+		fclose(file[fileI - 1]);
+
+		BITMAPFILEHEADER bmpFHeader = { 0 };
+		BITMAPINFOHEADER bmpIHeader = { 0 };
+		test = &bmpFHeader;
+
+		memcpy(&bmpFHeader, szTxt[fileI - 1], sizeof(BITMAPFILEHEADER));//map
+		int nHeadLen = bmpFHeader.bfOffBits - sizeof(BITMAPFILEHEADER);
+
+		fprintf(ff, "bfType ============= %04x \n", bmpFHeader.bfType);
+		fprintf(ff, "bfSize ============= %08x \n", bmpFHeader.bfSize);
+		fprintf(ff, "bfReserved1 ============= %04x \n", bmpFHeader.bfReserved1);
+		fprintf(ff, "bfReserved2 ============= %04x \n", bmpFHeader.bfReserved2);
+		printf("BITMAPINFOHEADER ============= %d \n", sizeof(BITMAPINFOHEADER));
+
+#if 1
+		memcpy(&bmpIHeader, szTxt[fileI - 1] + sizeof(BITMAPFILEHEADER), sizeof(BITMAPINFOHEADER));  //nHeadLen  
+
+		nWidth = bmpIHeader.biWidth;
+		nHeight = bmpIHeader.biHeight;
+		szTxt[fileI - 1] += bmpFHeader.bfOffBits;
+		nDataLen[fileI - 1] = nLen - bmpFHeader.bfOffBits;
+		//	printf("fileI == %d nDataLen ==== %d\n", fileI, nDataLen[fileI - 1]);
+		////////////////////////////////////
+#endif
+/****************************************************c++读取bmp*****************************************************/
+	}
+	long t2 = GetTickCount();
+	fprintf(ff, "t2 - t1 ================ %d \n", (t2 - t1));
+//h264编码格式的初始化开始
+	avcodec_register_all();//[1]
+
+	AVFrame *m_pRGBFrame = av_frame_alloc();// new AVFrame[1];  //RGB帧数据      
+	AVFrame *m_pYUVFrame = av_frame_alloc();// new AVFrame[1];;  //YUV帧数据    
+	AVCodecContext *c = NULL;
+	AVCodecContext *in_c = NULL;
+	AVCodec *pCodecH264; //编码器    
+	uint8_t * yuv_buff;// 
+					   //查找h264编码器    
+	pCodecH264 = avcodec_find_encoder(AV_CODEC_ID_H264);
+	if (!pCodecH264)
+	{
+		fprintf(stderr, "h264 codec not found\n");
+		exit(1);
+	}
+	c = avcodec_alloc_context3(pCodecH264);//[2]
+	c->bit_rate = 4000000;// put sample parameters     
+	c->width = nWidth;//     
+	c->height = nHeight;// 
+						// frames per second     
+	AVRational rate;
+	rate.num = 1;
+	rate.den = 25;
+	c->time_base = rate;//(AVRational){1,25};    
+	c->gop_size = 25; // emit one intra frame every ten frames     
+	c->max_b_frames = 0;
+	c->profile = 0x01;
+	c->thread_count = 1;
+	c->pix_fmt = AV_PIX_FMT_YUV420P;//PIX_FMT_RGB24; 
+	c->framerate = AVRational{ 25, 1 };
+	c->qmin = 10;
+	c->qmax = 51;
+	c->time_base.num = 1;
+	c->time_base.den = 25;
+
+	if (pCodecH264->id == AV_CODEC_ID_H264)
+		av_opt_set(c->priv_data, "preset", "slow", 0);
+
+	AVDictionary * opts = NULL;
+	av_dict_set(&opts, "profile", "main",0);
+
+	if (avcodec_open2(c, pCodecH264, &opts)<0)
+		printf("不能打开编码库");
+
+	m_pYUVFrame->format = c->pix_fmt;
+	m_pYUVFrame->width = c->width;
+	m_pYUVFrame->height = c->height;
+
+	int ret = av_frame_get_buffer(m_pYUVFrame, 32);
+	/*if (ret < 0) {
+		fprintf(stderr, "Could not allocate the video frame data\n");
+		exit(1);
+	}*/
+
+	int size = c->width * c->height;
+
+	yuv_buff = (uint8_t *)malloc((size * 3) / 2); // size for YUV 420     
+
+
+												  //图象编码    
+	int outbuf_size = 900000;
+	uint8_t * outbuf = (uint8_t*)malloc(outbuf_size);
+	avpkt.data = outbuf;
+	int u_size = 0;
+	FILE *f = NULL;
+	const char * filename = "D:\\test\\myData.h264";
+	f = fopen(filename, "wb");
+	if (!f)
+	{
+		printf("could not open %s\n", filename);
+		exit(1);
+	}
+
+	//初始化SwsContext    
+	SwsContext * scxt = sws_getContext(c->width, c->height, AV_PIX_FMT_BGR24, c->width, c->height, AV_PIX_FMT_YUV420P, SWS_POINT, NULL, NULL, NULL);
+	if (scxt == NULL)
+	{
+		printf("getcontext failed \n");
+		exit(-1);
+	}
+
+	//	printf("nWidth == %d nHeight == %d \n", nWidth, nHeight);
+	//AVFrame *pTFrame=new AVFrame  
+
+
+//h264编码格式的初始化结束
+
+#if 1
+	for (int i = 0; i<100; ++i)
+	{
+		fflush(stdout);
+		//AVFrame *m_pYUVFrame = new AVFrame[1];    
+
+		//int index = (i / 25) % PIC_NUM;
+		int index = i;
+		//uint8_t * rgb_buff = new uint8_t[nDataLen[index]];
+		unsigned char * rgb_buff = new unsigned char[size * 3];
+		if (rgb_buff == NULL)
+		{
+			printf("alloc rgb_buff failed \n");
+			break;
+		}
+		printf("index ==== %d nDataLen[index] ===== %d\n", index, nDataLen[index]);
+
+		//memcpy(rgb_buff, szTxt[index], nDataLen[index]);
+		memcpy(rgb_buff, szTxt[index], size * 3);
+		Mat matRGB(nHeight,nWidth, CV_8UC3, rgb_buff);
+		//imshow("test1", matRGB);
+		//waitKey( 10);
+		cv::Mat matYUV(nHeight * 3 / 2,nWidth, CV_8UC1);
+		cv::cvtColor(matRGB, matYUV, CV_BGR2YUV_I420);
+		memcpy(yuv_buff, matYUV.data, (size * 3) / 2);
+
+		av_image_fill_arrays(m_pRGBFrame->data, m_pRGBFrame->linesize, rgb_buff, AV_PIX_FMT_RGB24, nWidth, nHeight, 1);
+		//printf("m_pRGBFrame->linesize ==== %d\n", m_pRGBFrame->linesize[0]);
+		//将YUV buffer 填充YUV Frame    
+		//		avpicture_fill((AVPicture*)m_pYUVFrame, (uint8_t*)yuv_buff, AV_PIX_FMT_YUV420P, nWidth, nHeight);
+		av_image_fill_arrays(m_pYUVFrame->data, m_pYUVFrame->linesize, yuv_buff, AV_PIX_FMT_YUV420P, nWidth, nHeight, 1);
+		//		printf("m_pYUVFrame->linesize ========= %d \n", m_pYUVFrame->linesize[0]);
+		// 翻转RGB图像    
+#if 0
+		m_pRGBFrame->data[0] += m_pRGBFrame->linesize[0] * (nHeight - 1);
+		m_pRGBFrame->linesize[0] *= -1;
+		m_pRGBFrame->data[1] += m_pRGBFrame->linesize[1] * (nHeight / 2 - 1);
+		m_pRGBFrame->linesize[1] *= -1;
+		m_pRGBFrame->data[2] += m_pRGBFrame->linesize[2] * (nHeight / 2 - 1);
+		m_pRGBFrame->linesize[2] *= -1;
+#endif
+
+		//将RGB转化为YUV    
+//		sws_scale(scxt, m_pRGBFrame->data, m_pRGBFrame->linesize, 0, c->height, m_pYUVFrame->data, m_pYUVFrame->linesize);
+		//		sws_scale(scxt, m_pRGBFrame->data, m_pRGBFrame->linesize, 0, c->height, m_pYUVFrame->data, m_pYUVFrame->linesize);
+#if 1
+		int got_packet_ptr = 0;
+		av_init_packet(&avpkt);
+		avpkt.data = outbuf;
+		avpkt.size = outbuf_size;		
+		int write_ret = ret = av_frame_make_writable(m_pYUVFrame);
+		if (write_ret < 0)
+		{
+			break;
+		}
+		m_pYUVFrame->pts = i*(c->time_base.den) / ((c->time_base.num) * 25);
+
+		int send_ret = avcodec_send_frame(c, m_pYUVFrame);
+		if (send_ret == 0)
+		{
+			int en_ret = avcodec_receive_packet(c, &avpkt);
+
+			while(en_ret >= 0)
+			{
+				fwrite(avpkt.data, 1, avpkt.size, f);
+				en_ret = avcodec_receive_packet(c, &avpkt);
+				av_packet_unref(&avpkt);
+			}
+		}
+		delete[]rgb_buff;
+#endif
+	}//end of for
+
+	fclose(f);
+	av_frame_free(&m_pRGBFrame);
+	av_frame_free(&m_pYUVFrame);
+
+
+	//  
+	free(outbuf);
+
+	avcodec_close(c);
+
+	av_free(c);
+#endif
+	/*for (int i = 0; i < PIC_NUM; i++)
+	{
+		free(szTxt_bk[i]);
+	}*/
+
+	fclose(ff);
+	getchar();
+}
+

@@ -1,0 +1,105 @@
+//JSONMSGCODE_SERVER_GETCAMERA_NUMBERS 请求
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   										//必填
+        "clientIP" : "192.168.1.100",   										//非必填
+        "msgCode" : JSONMSGCODE_SERVER_GETCAMERA_NUMBERS,								//必填
+        "msgType" : JSONMSGTYPE_REQUEST,            							//必填
+       // "versionNo": "v1.0.0",          										//必填
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填
+    },
+    "msgBody" :
+	{
+		"dataRequest" : 
+		{
+			"treeCounts":
+		}
+		"dataPush" : 
+		{
+			
+		}
+	}
+}
+//JSONMSGCODE_SERVER_GETCAMERA_NUMBERS 返回
+{
+	"msgHead":
+	{
+        "serverIP" : "192.168.1.101",   										//必填
+        "clientIP" : "192.168.1.100",   										//非必填
+        "msgCode" : JSONMSGCODE_SERVER_GETCAMERA_NUMBERS,								//必填
+        "msgType" : JSONMSGTYPE_REQUEST,            							//必填
+       // "versionNo": "v1.0.0",          										//必填
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填	
+	}
+	"msgBody":
+	{
+		"dataRequest":
+		{
+			"treeCounts":101,
+			...		
+		}
+		
+	}
+}
+//JSONMSGCODE_SERVER_GETCAMERA_INFO 请求
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   										//必填
+        "clientIP" : "192.168.1.100",   										//非必填
+        "msgCode" : JSONMSGCODE_SERVER_GETCAMERA_INFO,								//必填
+        "msgType" : JSONMSGTYPE_REQUEST,            							//必填
+       // "versionNo": "v1.0.0",          										//必填
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填
+    },
+    "msgBody" :
+	{
+		"dataRequest" : 
+		{
+			
+		}
+		"dataPush" : 
+		{
+			
+		}
+	}
+}
+//JSONMSGCODE_SERVER_GETCAMERA_INFO 返回
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   										//必填
+        "clientIP" : "192.168.1.100",   										//非必填
+        "msgCode" : JSONMSGCODE_SERVER_GETCAMERA_INFO,								//必填
+        "msgType" : JSONMSGTYPE_REQUEST,            							//必填
+       // "versionNo": "v1.0.0",          										//必填
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填
+    },
+    "msgBody" :
+	{
+		"dataRequest" : 
+		{
+			"cameraList":[
+			{"camName":,"camID":,"MediaUserName":,"MediaPassWord":,"camIP":,"camPort":,"camMapX":,"camMapY":,"camState":,"streamType":,"flow":,"build":,"earaA":},
+			...
+			]
+		}
+		"dataPush" : 
+		{
+			
+		}
+	}
+}

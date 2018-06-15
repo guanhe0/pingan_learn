@@ -1,0 +1,80 @@
+// var_checkout.cpp: 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+
+
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#include <time.h>
+#include "process.h"
+
+int g_var = 0;
+HANDLE g_semaphore;
+//用以标识是否已经改变的条件变量
+//pthread_cond_t has_changed = PTHREAD_COND_INITIALIZER;
+//条件变量需要配套的互斥锁
+//pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+
+
+//该函数模拟你说的侦测到变量改变需要调用的函数
+void func(int n)
+{
+	printf("var changed == %d\n", n);
+}
+unsigned int __stdcall scanThread(LPVOID arg)
+{
+	
+	int *pNumber = (int *)arg;
+	
+	while (1)
+	{
+		WaitForSingleObject(g_semaphore, INFINITE);
+//		while (lastNumber == *pNumber)//
+		int lastNumber = *pNumber;
+		if (lastNumber == *pNumber)//
+		{			
+			//pthread_cond_wait(&has_changed, &lock);//一直在这里等待						
+		}
+		else
+		{
+			func(lastNumber = *pNumber);
+		}
+		ReleaseSemaphore(g_semaphore, 1, NULL);
+		
+		
+		
+	}
+	return NULL;
+}
+int main()
+{
+	HANDLE scanthreadid;//线程句柄
+	g_semaphore = CreateSemaphore(NULL, 1, 1, NULL);
+	scanthreadid = (HANDLE)_beginthreadex(NULL, 0, scanThread, (void *)&g_var,0,NULL);
+
+
+	srand(time(NULL));//使rand()更接近随机
+	for (;;)
+	{
+		//模拟真实情况  随机的时间来修改g_var的值 然后修改成随机的值
+		Sleep(rand() % 5 + 1);
+		WaitForSingleObject(g_semaphore, INFINITE);
+		g_var = rand() % 1000;
+		printf("moding ==%d \n", g_var);
+		getchar();
+		ReleaseSemaphore(g_semaphore, 1, NULL);		
+//		pthread_cond_signal(&has_changed);//发送一个信号给另外一个正在处于阻塞等待状态的线程
+	}
+
+	//回收子线程
+	//pthread_join(scanthreadid, NULL);
+
+	////清除资源 
+	//pthread_mutex_destroy(&lock);
+	//pthread_cond_destroy(&has_changed);
+	CloseHandle(scanthreadid);
+	return 0;
+}
+

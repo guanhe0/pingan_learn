@@ -1,0 +1,55 @@
+#include "stdafx.h"  
+#include "process.h"  
+#include "windows.h"  
+
+static int gFthCount = 0;//父线程循环计数  
+static int gChdCount = 0;//子线程循环计数  
+const int gFthEvyCount = 2;//父线程每次循环计数  
+const int gChdEvCount = 3;//子线程每次循环计数  
+const int gSum = 5;//总循环次数  
+const int gSleepTimes = 200;
+
+HANDLE  g_hFthThdEvent;
+HANDLE  g_hChdThdEvent;
+unsigned int __stdcall ThreadFunc(LPVOID pM)
+{
+	int i = 0;
+
+	while (1)
+	{
+		WaitForSingleObject(g_hChdThdEvent, INFINITE); //等待父线程事件被触发  
+		printf("child thread\n");
+		getchar();
+		SetEvent(g_hFthThdEvent); //触发父线程事件  
+	}
+
+	return 0;
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+
+	int i = 0;
+
+	g_hFthThdEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	g_hChdThdEvent = CreateEvent(NULL, FALSE, TRUE, NULL);
+
+	HANDLE handleId = (HANDLE)_beginthreadex(NULL, 0, ThreadFunc, NULL, 0, NULL);
+
+	while (1)
+	{
+
+		WaitForSingleObject(g_hFthThdEvent, INFINITE); //等待子线程事件被触发  
+		printf("father thread\n");
+		getchar();
+		SetEvent(g_hChdThdEvent); //触发子线程事件  
+	}
+	WaitForMultipleObjects(1, &handleId, TRUE, INFINITE);
+
+	CloseHandle(handleId);
+	CloseHandle(g_hFthThdEvent);
+	CloseHandle(g_hChdThdEvent);
+	printf("-----------OVER-------------\n");
+
+	return 0;
+}

@@ -1,0 +1,350 @@
+//ping服务器
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   //必填
+        "clientIP" : "192.168.1.100",   //非必填
+        "msgCode" : jsonMsgCode_ClientConnectTest,	//必填
+        "msgType" : jsonMsgType_Request,            //必填
+        "versionNo": "v1.0.0",          //必填
+        "timestamp" : 1512973817,       //必填
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0               //目前没有，必填
+    },
+    "msgBody" : 
+    {
+        "dataRequest" : 
+        {
+            "code" :                    //服务器必须返回的数据
+        },
+        "dataPush" : 
+        {
+            "versionNo":"v1.0.0",
+        }
+    }
+}
+
+//ping数据返回
+{
+    "msgHead"：
+    {
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0,              //目前没有，必填
+        "timestamp":1476414567061,      //必填
+        "clientIP":"192.168.1.101",     //非必填
+        "msgType":0,                    //非必填
+        "msgCode":jsonMsgCode_ClientConnectTest //非必填
+    },
+    "msgBody":
+    {
+        "dataSend":
+        {
+            "code"：jsonMsgCode_ClientConnect_Update,//jsonMsgCode_Client_OK
+            "newClientVer" : "v1.1.0",
+            "newClientUrl": "ftp://192.168.1.101/shared/client.exe"
+        }
+    }
+}
+
+//登录客户端    
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   //必填
+        "clientIP" : "192.168.1.100",   //非必填
+        "msgCode" : jsonMsgCode_ClientLogin,	//必填
+        "msgType" : jsonMsgType_Request,//必填
+        "versionNo": "v1.0.0",          //必填
+        "timestamp" : 1512973817,       //必填
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0               //目前没有，必填
+    },
+    "msgBody" : 
+    {
+        "dataRequest" : 
+        {
+            "code" :                    //服务器必须返回的数据
+        },
+        "dataPush" : 
+        {
+            "userName":"admin",
+            "passWord":"admin"
+        }
+    }
+}
+
+//登录数据返回    
+{
+    "msgHead"：
+    {
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0,              //目前没有，必填
+        "timestamp":1476414567061,      //必填
+        "clientIP":"192.168.1.101",     //非必填
+        "msgType":0,                    //非必填
+        "msgCode":jsonMsgCode_ClientLogin //非必填
+    },
+    "msgBody":
+    {
+        "dataSend":
+        {
+            /* 
+             * jsonMsgCode_ClientLogin_ERR_UserName
+             * jsonMsgCode_ClientLogin_ERR_PassWord
+             * jsonMsgCode_ClientLogin_ERR_TimesLimit
+             * jsonMsgCode_ClientLogin_ERR_HaveLogin
+             */ 
+            "code":jsonMsgCode_Client_OK
+        }
+    }
+}
+
+//获取相机列表  
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   //必填
+        "clientIP" : "192.168.1.100",   //非必填
+        "msgCode" : jsonMsgCode_Client_GetTreeInfo,	//必填
+        "msgType" : jsonMsgType_Request,//必填
+        "versionNo": "v1.0.0",          //必填
+        "timestamp" : 1512973817,       //必填
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0               //目前没有，必填
+    },
+    "msgBody" :
+    {
+        "dataRequest" :
+        {
+            "code" : 
+        }
+    },
+}
+
+//相机列表返回     
+{
+    "msgHead"：
+    {
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0,              //目前没有，必填
+        "timestamp":1476414567061,      //必填
+        "clientIP":"192.168.1.101",     //非必填
+        "msgType":0,                    //非必填
+        "msgCode":jsonMsgCode_Client_GetTreeInfo //非必填
+    },
+    "msgBody":
+    {
+        "dataSend":
+        {
+            "code"：jsonMsgCode_Client_ReturnTreeInfo,
+
+            "districMaps":                  			//数据2：地图集合
+            {
+                "一楼东":
+                {
+                    "mapUrl":"ftp://192.168.1.101/shared/1FloorE.jpg"   
+                }
+                "二楼北":
+                {
+                    "mapUrl":"ftp://192.168.1.101/shared/2FlooN.jpg"   
+                }
+            }
+            
+            "earaArray":                            	//数据3：大区域块，一级区域
+            [
+                {
+                    "earaName":"深圳汽车站",
+                    "districArray":                 	//数据4：小区域，二级区域							
+                    [                               
+                        {                           
+                            "districtName":"一楼东", 	//小区域名，地图名
+                            "cameraArray":          	//该区域下所有相机列表
+                            [                       	
+                                {                   	
+                                    "camName":      	//相机名
+                                    "camID":        	//相机唯一编号
+                                    "camUserName":  	//相机登陆用户名
+                                    "camPassWord":  	//相机登陆密码
+                                    "camIP":        	//相机IP
+                                    "camPort":      	//相机端口
+                                    "camMapX":      	//相机在监控地图的x坐标
+                                    "camMapY":      	//相机在监控地图的y坐标
+                                    "camState":     	//相机状态：CAM_CLOSED CAM_OPEN CAM_WARNING
+                                },                  
+                                {...}               
+                            ]                       
+                        },                          
+                        {                           
+                            "districtName":"二楼北",   
+                            "cameraArray":[...]     
+                        }                           
+                    ],
+                },
+                {
+                    "earaName":"深圳火车站",
+                    "districArray":[...]
+                },
+                {...}
+            ]
+        }
+    }
+}
+
+//服务器推送报警相机信息
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   //非必填
+        "clientIP" : "192.168.1.100",   //必填
+        "msgCode" : jsonMsgCode_Client_SendWarnCamInfo,	//必填
+        "msgType" : jsonMsgType_Notify,	//必填
+        "versionNo": "v1.0.0",          //必填
+        "timestamp" : 1512973817,       //必填
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0               //目前没有，必填
+    },
+	"msgBody":
+	{
+		"dataPush":
+		{       
+			"warnCamsArray":                					//数据4：报警相机
+			[                               					
+				{                           					
+					"camName":              					//相机名
+					"camID":                					//相机唯一编号
+					"camIP":                					//相机IP
+					"districtName":"一楼东",					 //区域名
+					"camMapX":              					//相机在监控地图的x坐标
+					"camMapY":              					//相机在监控地图的y坐标
+					"warnPersonArray":      					//相机报警列表
+					[                       					
+						{                   					
+							"personID":     					//报警人物ID
+							"personName":   					//报警人物名字
+							"dangerDegree": 					//报警等级
+							"similarity":   					//相似度
+							"confidence":   					//置信度
+							"libPhoto": 						//底库图片
+							{
+								"libPhotoUrl":"ftp://192.168.1.101/shared/xxxxxxx.jpg",
+								"photoType":"jpg",				//预留接口
+								"photoByte":"adsgfsdfdhggfhgdgh"//预留接口
+							}    
+							"capPhoto":  						//抓拍图片
+							{
+								"libPhotoUrl":"ftp://192.168.1.110/shared/yyyyyyy.jpg",
+								"photoType":"jpg",				//预留接口
+								"photoByte":"safdsgdsgs"		//预留接口
+							}   
+						},
+						{...}
+					]
+				},
+				{
+					"camName":
+					"camID":
+					"camIP":
+					"camMapX":
+					"camMapY":
+					"warnArray":[...]
+				}
+				{...}
+			]
+		}
+		"dataRequest":
+		{
+			"code" :
+		}
+	}
+}
+
+//客户端回复服务器推送报警相机信息
+{
+	"msgHead"：
+    {
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0,              //目前没有，必填
+        "timestamp":1476414567061,      //必填
+        "clientIP":"192.168.1.101",     //非必填
+        "msgType":0,                    //非必填
+        "msgCode":jsonMsgCode_Client_SendWarnCamInfo //非必填
+    },
+    "msgBody":
+    {
+        "dataSend":
+        {
+            /* 
+             * jsonMsgCode_Client_GetWarnCamInfo_ERR	//要求服务器重发信息
+             */ 
+            "code":jsonMsgCode_Client_OK
+        }
+    }
+}
+
+
+//服务器跟踪信息推送
+{
+	"msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   //非必填
+        "clientIP" : "192.168.1.100",   //必填
+        "msgCode" : jsonMsgCode_Client_SendTraceInfo,	//必填
+        "msgType" : jsonMsgType_Notify,	//必填
+        "versionNo": "v1.0.0",          //必填
+        "timestamp" : 1512973817,       //必填
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0               //目前没有，必填
+    },
+	"msgBody":
+	{
+		"dataPush":
+		{ 
+			"personID":     			//报警人物ID
+			"camName":
+			"camID":
+			"camIP":
+			"camMapX":
+			"camMapY":
+			"traceRoute":				//追踪路线
+			[
+				{"x":0,"y":0},
+				{"x":10,"y":0},
+				{"x":10,"y":10},
+			]
+		},
+		"dataRequest":
+		{
+			"code" :
+		}
+	}     
+}
+
+//客户端返回服务器跟踪信息推送
+{
+	"msgHead"：
+    {
+        "requestID": 0,                 //目前没有，必填
+        "boundID": 0,                   //目前没有，必填
+        "authorization":0,              //目前没有，必填
+        "timestamp":1476414567061,      //必填
+        "clientIP":"192.168.1.101",     //非必填
+        "msgType":0,                    //非必填
+        "msgCode":jsonMsgCode_Client_SendTraceInfo //非必填
+    },
+    "msgBody":
+    {
+        "dataSend":
+        { 
+            "code":jsonMsgCode_Client_TraceInfoRecv
+        }
+    }    
+}

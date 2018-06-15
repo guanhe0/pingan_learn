@@ -1,0 +1,23 @@
+//获取服务器配置表  
+{
+    "msgHead" : 
+    {
+        "serverIP" : "192.168.1.101",   										//必填
+        "javaIP" : "192.168.1.100",   										//非必填
+        "msgCode" : JSONMSGCODE_CLIENT_GET_CONFINFO,							//必填
+        "msgType" : JSONMSGTYPE_REQUEST,										//必填																				
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填
+    },
+    "msgBody" :
+    {
+        "dataJavaPush" :
+        {
+        },
+		"dataServerRequest" : 
+        {
+        }
+    },
+}

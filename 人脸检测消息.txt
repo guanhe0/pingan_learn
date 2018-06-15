@@ -1,0 +1,24 @@
+{
+	"msgHead" :
+	{
+        "serverIP" : "192.168.1.101",   										//必填
+        "clientIP" : "192.168.1.100",   										//非必填
+        "msgCode" : JSONMSGCODE_FACEDETECED_PUSH,								//必填
+        "msgType" : JSONMSGTYPE_REQUEST,            							//必填        
+        "timestamp" : 1512973817,       										//必填
+        "requestID": 0,                 										//目前没有，必填
+        "boundID": 0,                   										//目前没有，必填
+        "authorization":0               										//目前没有，必填	
+	}
+	"msgBody" :
+	{
+		"dataRequest" :
+		{
+		
+		}
+		"dataPush" :
+		{
+			"alarmMsg":"send a alarm msg"
+		}
+	}
+}

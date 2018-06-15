@@ -1,0 +1,10 @@
+oltp
+samba
+qemu
+nginx
+docker
+lamp
+openstack
+
+jenkins
+lava

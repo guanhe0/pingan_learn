@@ -1,0 +1,4 @@
+int n
+string str
+指针 p
+class cl

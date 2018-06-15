@@ -1,0 +1,21 @@
+[1]SELECT distinct(*) FROM kq WHERE data between today
+[2]java server
+[3]message server
+[4]Business integration logic
+[5]buffer server
+[6]log server
+
+[1]SELECT distinct(*) FROM kq WHERE data between today
+[2]java server
+[6]log server
+
+[1]client 点击保存视频
+[2]message server
+[3]Business integration logic
+[4]file store server
+[5]stream server
+[6]...
+
+[登陆]
+(1)连接服务器 client:
+(2)

@@ -1,0 +1,16 @@
+1）机顶盒UI编写与客户端交互逻辑编写
+2）CA代码移植和功能完善
+3）熟悉机顶盒常用功能
+4）熟悉ALI平台SDK
+
+web前端开发
+1）为IPC浏览器端编写web程序
+2）使用CSS，HTML，javascript,jquery,AJax
+3）兼容ie7/8/9/10,firefox,chrome
+4）对旧web客户端进行维护和更新
+
+软件测试工程师
+1）在Linux系统下安装docker,lamp,nginx,kvm等应用
+2）阅读linux应用英文安装说明，安装并通过脚本实现自动化
+3）通过google等解决安装过程困难
+4）熟悉shell，python脚本，Linux系统

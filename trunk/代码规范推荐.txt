@@ -1,0 +1,10 @@
+1.文件名 首字母大写
+2.变量名: 英文单词小写+下划线（_）+英文单词小写     eg: int display_picture_number;
+3.函数名：英文单词小写+下划线（_）+英文单词小写     eg: av_frame_free()
+4.类名称：首字母大写                                eg: class AVFrame
+
+int n
+string str
+指针 p
+类对象 
+ 
