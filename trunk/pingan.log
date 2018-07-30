@@ -526,14 +526,65 @@ boss [ok] 东莞最近不景气，革命式还是渐进式 [选项保持]
 提交至新的url [yes]
 查询clien关联 [yes]
 [7.11]
-imread 本地，网络区分？
-完成抓拍查询编译运行
-关注东莞
-程序员客栈签约
-关注梅
-关注洋 
-update code
+imread 本地，网络区分？ [yes]
+完成抓拍查询编译运行	[yes]
+关注东莞[yes]
+程序员客栈签约[no]
+关注梅[no]
+关注洋 [no]
+update code [yes]
 ##E:\svn\client_test\AITestProject
+连浇花都有自动化工具了[yes]
+安防产业利润 基础功能 + 创新功能 [yes]
+机顶盒产业利润[no]
+忍着思念理清代码[yes]
+产品升级淘宝评论[yes]
+[7.12]
+程序员客栈签约 [no]
+关注梅 [yes]
+留意其他人提交代码 [yes]
+小型人脸识别系统 [yes]
+RN171 [ok]
+智能家居块 [ok]
+工厂模式,简单工厂模式,差默写[ok]
+二维码扫描开锁[no]
+[7.13]
+关注梅 [y]
+查看告警查询
+人脸检测 
+xingqu是chuang的最好伙伴
+工厂模式简单默写
+[7.25]
+关注梅[yes] 
+更新客户端代码 [no]
+人脸检测 效果 [no]
+https://192.168.1.200/svn/π_Smart_IOT_Platform/Monitor_Platform/branches/client_logic/AITestProject
 
+./modules/objdetect/include/opencv2/objdetect.hpp
+/mnt/share/opencv-3.4.2/modules/objdetect/include/opencv2/objdetect.hpp
 
+/mnt/share/opencv-3.4.2/modules/objdetect/include/:
+/mnt/share/opencv-3.4.2/modules/objdetect/include/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/mnt/share/opencv-3.4.2/modules/objdetect/include
+
+##########
+/mnt/share/opencv-3.4.2/modules/objdetect/include/opencv2/
+####
+/mnt/share/opencv-3.4.2/modules/core/include
+####
+https://docs.opencv.org/trunk/d7/d8b/tutorial_py_face_detection.html
+[7.26]
+关注梅 
+关注洋 
+关注客户端
+跑动人脸检测
+日报填写 
+中午车票
+[7.30]
+关注梅 
+关注洋 
+关注拉面 
+关注客户端
+跑动人脸检测
+日报填写
 

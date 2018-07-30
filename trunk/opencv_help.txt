@@ -1,0 +1,7 @@
+opencv 读取网络图片
+https://blog.csdn.net/m0_37606112/article/details/78549323?locationNum=6&fps=1
+[1]
+//读取本地图片
+string url = "E:\\svn\\client_test\\AITestProject\\222.jpg";
+[2]
+http://e.hiphotos.baidu.com/image/pic/item/2f738bd4b31c8701ad467c1a2b7f9e2f0608ff5e.jpg
