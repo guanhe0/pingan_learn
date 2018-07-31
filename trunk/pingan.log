@@ -581,10 +581,15 @@ https://docs.opencv.org/trunk/d7/d8b/tutorial_py_face_detection.html
 日报填写 
 中午车票
 [7.30]
+关注梅 [yes]
+关注洋 [no]
+关注拉面 [yes]
+关注客户端 [no]
+跑动人脸检测 [yes]
+日报填写 [yes 缺失31]
+[7.31]
 关注梅 
-关注洋 
-关注拉面 
-关注客户端
-跑动人脸检测
-日报填写
-
+关注boss 
+拉面
+继续人脸检测
+日报填写 [yes 缺失31]
